@@ -14,7 +14,7 @@ const MainButton = (props) => {
 const styles = StyleSheet.create({
   buttonContainer: {
     paddingVertical: 5,
-    paddingHorizontal: 16,
+    paddingHorizontal: 35,
     borderWidth: 3,
     borderRadius: 15,
   },
