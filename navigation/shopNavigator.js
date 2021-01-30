@@ -1,26 +1,50 @@
-import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from "react-navigation-stack";
+import { createAppContainer } from "react-navigation";
+import { createDrawerNavigator } from "react-navigation-drawer";
 
-import { Platform } from 'react-native';
+import { Platform } from "react-native";
 
-import ProductsOverviewScreen from '../screens/shop/ProductsOverviewScreen';
-import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
-import CartScreen from '../screens/shop/CartScreen';
+import ProductsOverviewScreen from "../screens/shop/ProductsOverviewScreen";
+import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
+import CartScreen from "../screens/shop/CartScreen";
+import OrderScreen from "../screens/shop/OrderScreen";
 
-import Colors from '../constants/colors';
+import Colors from "../constants/colors";
 
-const ProductsNavigator = createStackNavigator({
+const defaultNavoptions = {
+  headerStyle: {
+    backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
+  },
+  headerTintColor: Platform.OS === "android" ? "white" : Colors.primaryColor,
+};
+
+const ProductsNavigator = createStackNavigator(
+  {
     ProductsOverview: ProductsOverviewScreen,
     ProductDetail: ProductDetailScreen,
-    Cart: CartScreen
+    Cart: CartScreen,
+  },
+  {
+    defaultNavigationOptions: defaultNavoptions,
+  }
+);
+
+const OrdersNavigator = createStackNavigator(
+  {
+    Orders: OrderScreen,
+  },
+  {
+    defaultNavigationOptions: defaultNavoptions,
+  }
+);
+
+const ShopNavigator = createDrawerNavigator({
+    Products: ProductsNavigator,
+    Orders: OrdersNavigator
 }, {
-    defaultNavigationOptions: {
-        headerStyle: {
-            backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
-        },
-        headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor
+    contentOptions: {
+        activeTintColor: Colors.primaryColor
     }
 });
 
-
-export default createAppContainer(ProductsNavigator);
+export default createAppContainer(ShopNavigator);
